@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
-from typing import Optional
+from typing import Optional, NewType
 from datetime import date
 
 
@@ -38,3 +38,14 @@ class Batch:
 
     def can_allocate(self, line: OrderLine) -> bool:
         return self.sku == line.sku and self.purchased_qty >= line.qty
+
+
+class Batch2:
+    Quantity = NewType("Quantity", int)
+    Sku = NewType("Sku", str)
+    Reference = NewType("Reference", str)
+
+    def __init__(self, ref: Reference, sku: Sku, qty: Quantity):
+        self.reference = ref
+        self.sku = sku
+        self._purchased_quantity = qty

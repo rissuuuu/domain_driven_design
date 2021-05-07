@@ -1,5 +1,6 @@
-from model import Batch, OrderLine
+from model import Batch, OrderLine, Batch2
 from datetime import date
+from typing import NewType
 
 
 def make_batch_and_line(sku, batch_qty, line_qty):
@@ -47,4 +48,16 @@ def allocate():
     print(batch.available_quantity)
 
 
-allocate()
+def test_allocation_is_idempotent():
+    batch, line = make_batch_and_line("ANGULAR-DESK", 20, 2)
+    batch.allocate(line)
+    batch.allocate(line)
+    return batch
+
+
+
+
+order=OrderLine("a","abc",1)
+print(order)
+order.orderid="b"
+print(order)
